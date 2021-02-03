@@ -5,8 +5,6 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-import br.com.ufsm.projeto.compasso.usuario.model.Usuario;
-import br.com.ufsm.projeto.compasso.usuario.service.UsuarioService;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
