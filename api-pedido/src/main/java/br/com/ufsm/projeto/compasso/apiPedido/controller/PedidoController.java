@@ -1,7 +1,5 @@
 package br.com.ufsm.projeto.compasso.apiPedido.controller;
 
-
-
 import java.util.List;
 
 
@@ -26,8 +24,6 @@ import br.com.ufsm.projeto.compasso.apiPedido.model.Produto;
 import br.com.ufsm.projeto.compasso.apiPedido.model.Usuario;
 import br.com.ufsm.projeto.compasso.apiPedido.repository.PedidoRepository;
 
-
-
 @RestController
 public class PedidoController {
 	private final Logger LOGGER = LoggerFactory.getLogger(PedidoController.class);
@@ -41,79 +37,52 @@ public class PedidoController {
 	@Autowired
 	private ProdutoClient clientProduto;
 	
-	
 	@PostMapping(value ="/pedidos/usuario/{usuarioId}/produto/{produtoId}/quantidade/{quantidade}", produces = "application/json;charset=UTF-8")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<Pedido> create(@PathVariable("usuarioId") Long usuarioId, @PathVariable("produtoId") Long produtoId,  @PathVariable("quantidade") Integer quantidade) {
-		Long id_produto = produtoId;
-		Long id_usuario = usuarioId;
+	public ResponseEntity<Pedido> create(@PathVariable Long usuarioId, @PathVariable Long produtoId,  @PathVariable Integer quantidade) {
 		Integer qtd = quantidade;
-		
-	
 		try {
-			
-		
 			List<Usuario> usuario = clientUser.buscaUsuario();
-			
-		
 			try {
-				LOGGER.info("Entrou no pedido ");
+				LOGGER.info("Entrou no pedido");
 				Pedido pedido = new Pedido();
 				for (Usuario u : usuario) {
-					if(u.getId() == id_usuario) {
-							
-						pedido.setUsuario(u.getName());
+					if(u.getId() == usuarioId) {			
+						pedido.setUsuario(u.getNome());
 						pedido.setIdUsuario(u.getId());
-						
-						LOGGER.info("Adicionou o usuario ao pedido "+ u.getId());
-						
-						
-					
-						
-						}
+						LOGGER.info("Adicionou o usuario ao pedido " + u.getId());
 					}
-			List<Produto> produto = clientProduto.buscaProduto(); 
+				}
+				List<Produto> produto = clientProduto.buscaProduto(); 
 				for (Produto p : produto) {
-					if(p.getId() == id_produto) {
+					if(p.getId() == produtoId) {
 						pedido.setProduto(p.getNome());
 						pedido.setPreco(p.getPreco());
 						pedido.setIdProduto(p.getId());				
-						LOGGER.info("Adicionou o produto ao pedido "+ p.getId());
-						System.out.println(p.getId());
-					
+						LOGGER.info("Adicionou o produto ao pedido " + p.getId());
 					}
 					pedido.setQuantidade(qtd);
-					
-					if(pedido.getIdUsuario().equals(null) && pedido.getIdProduto().equals(null)) {
-						System.out.println("Nada foi cadastrado");
-					}else {
-						return ResponseEntity.ok(pedidoRepository.save(pedido));		
-					}
-					
+					if (pedido.getIdUsuario().equals(null) && pedido.getIdProduto().equals(null))
+						LOGGER.info("Nada foi cadastrado");
+					else
+						return ResponseEntity.ok(pedidoRepository.save(pedido));
 				}
-				
 			} catch (Exception e) {
-				LOGGER.info("deu erro denovo "+e);
+				LOGGER.info("Erro ao fazer pedido " + e);
 			}
-			
-			
 		} catch (Exception e) {
 			LOGGER.info("Pedido erro " + e);
 		}
-	
-		return ResponseEntity.notFound().build();
-		
+		return ResponseEntity.notFound().build();	
 	};
 	
 	@GetMapping("/usuario")
-	public List<Usuario> buscaUser() {
-			
-	return clientUser.buscaUsuario();	
+	public List<Usuario> buscaUser() {	
+		return clientUser.buscaUsuario();	
 	}
 	
 	@GetMapping("/produto")
 	public List<Produto> buscaProd() {
-	return clientProduto.buscaProduto();
+		return clientProduto.buscaProduto();
 	}
-	
 }

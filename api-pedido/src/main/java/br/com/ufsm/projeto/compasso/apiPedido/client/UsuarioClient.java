@@ -12,11 +12,7 @@ import br.com.ufsm.projeto.compasso.apiPedido.model.Usuario;
 
 @FeignClient(name = "usuario", url = "http://localhost:8080/usuario" )
 public interface UsuarioClient {
-
+	
 	@RequestMapping(method = RequestMethod.GET, value ="", produces = "application/json;charset=UTF-8")
 	public List<Usuario> buscaUsuario();
-
-	
-	
-	
 }

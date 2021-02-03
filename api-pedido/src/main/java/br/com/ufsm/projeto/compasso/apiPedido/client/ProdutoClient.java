@@ -13,8 +13,6 @@ import br.com.ufsm.projeto.compasso.apiPedido.model.Produto;
 
 @FeignClient(name = "produto", url = "http://localhost:8082/produto")
 public interface ProdutoClient {
-
-
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Produto> buscaProduto();
 }

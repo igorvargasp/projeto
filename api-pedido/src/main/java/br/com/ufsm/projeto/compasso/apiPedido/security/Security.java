@@ -23,29 +23,20 @@ public class Security extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UsuarioClient client;
-	
-
 
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		 http.authorizeRequests()
-		 .anyRequest().authenticated()
-		 .and().httpBasic().and().csrf().disable();
-		       	
-		}
-	
+	 http.authorizeRequests()
+	 .anyRequest().authenticated()
+	 .and().httpBasic().and().csrf().disable();   	
+	}
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		List<Usuario> user = client.buscaUsuario();
 		for (Usuario usuario : user) {
-			auth.inMemoryAuthentication().withUser(usuario.getName()).password("{noop}"+usuario.getSenha()).roles("USER");	
+			auth.inMemoryAuthentication().withUser(usuario.getNome()).password("{noop}"+usuario.getSenha()).roles("USER");	
 		}
-		
 	}
-	
-	 
-	    
-
 }

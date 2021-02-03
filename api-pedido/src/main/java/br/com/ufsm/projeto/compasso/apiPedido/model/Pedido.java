@@ -7,13 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
-
-
-
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "pedido")
+@Data
+@NoArgsConstructor
 public class Pedido {
 
 	@Id
@@ -33,85 +33,9 @@ public class Pedido {
 	@Column(name = "preco")
 	private Double preco;
 
-	
-	
-	public Pedido() {
-		
-	}
-	
-	
 	public Pedido(Long id, Integer quantidade) {
 		super();
 		this.id = id;
 		this.quantidade = quantidade;
-		
 	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public Integer getQuantidade() {
-		return quantidade;
-	}
-	public void setQuantidade(Integer quantidade) {
-		this.quantidade = quantidade;
-	}
-
-
-	public Long getIdUsuario() {
-		return idUsuario;
-	}
-
-
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-
-
-	public String getUsuario() {
-		return usuario;
-	}
-
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
-
-
-	public Long getIdProduto() {
-		return idProduto;
-	}
-
-
-	public void setIdProduto(Long idProduto) {
-		this.idProduto = idProduto;
-	}
-
-
-	public String getProduto() {
-		return produto;
-	}
-
-
-	public void setProduto(String produto) {
-		this.produto = produto;
-	}
-
-
-	public Double getPreco() {
-		return preco;
-	}
-
-
-	public void setPreco(Double preco) {
-		this.preco = preco;
-	}
-
-	
-	
-	
-	
-	
 }

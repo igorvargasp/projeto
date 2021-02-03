@@ -1,45 +1,21 @@
 package br.com.ufsm.projeto.compasso.apiPedido.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
 public class Usuario {
-
 	
 	private long id;
 	
-	private String name;
+	private String nome;
 	
 	private String senha;
 	
-	public Usuario() {
-		
-	}
-	
-	public Usuario(long id, String name) {
+	public Usuario(long id, String nome) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.nome = nome;
 	}
-	
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-	
-	
 }

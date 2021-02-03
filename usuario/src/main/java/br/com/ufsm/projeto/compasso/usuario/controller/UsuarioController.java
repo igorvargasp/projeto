@@ -2,17 +2,14 @@ package br.com.ufsm.projeto.compasso.usuario.controller;
 
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
-import javax.validation.constraintvalidation.SupportedValidationTarget;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,81 +17,86 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.ufsm.projeto.compasso.usuario.controller.form.UsuarioForm;
 import br.com.ufsm.projeto.compasso.usuario.model.Usuario;
-import br.com.ufsm.projeto.compasso.usuario.repository.UsuarioRepository;
+import br.com.ufsm.projeto.compasso.usuario.service.UsuarioService;
 
 @RestController
+@RequestMapping("/usuario")
 public class UsuarioController {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(UsuarioController.class);
-	
-	
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private UsuarioService service;
 	
 	
-	
-	
-	@GetMapping(value= "/usuario")
-	public List<Usuario> listar(){
-		List<Usuario> usuario = usuarioRepository.findAll();
-		return usuario;
+	@GetMapping
+	public List<Usuario> listar (String nome) {
+		List<Usuario> usuarios = (nome != null && !nome.isEmpty()) ? 
+				service.findByName(nome) : service.findAll();
+		return usuarios;
 	}
 	
-	@PostMapping(value = "/usuario")
-	public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario){
+	@GetMapping("/{id}")
+	public ResponseEntity<Usuario> detalhe (@PathVariable Long id) {
 		try {
-			LOGGER.info("Usuario cadastro "+ usuario.getName());
-			return ResponseEntity.ok(usuarioRepository.save(usuario));
-						
+			return ResponseEntity.ok(service.findById(id));
 		} catch (Exception e) {
-			LOGGER.info("Erro no cadastro "+e);
+			LOGGER.info("Erro ao pesquisar usuário " + e);
+		}
+		LOGGER.info("Usuário não encontrado");
+		return ResponseEntity.notFound().build();
+	}
+	
+	@PostMapping
+	@Transactional
+	public ResponseEntity<Usuario> cadastrar(@RequestBody @Valid UsuarioForm form){
+		try {
+			Usuario usuario = new Usuario((long)0, form.getNome(), form.getSenha());
+			usuario = service.save(usuario);
+			LOGGER.info("Usuario cadastro " + usuario.getId());
+			return ResponseEntity.ok(usuario);			
+		} catch (Exception e) {
+			LOGGER.info("Erro no cadastro " + e);
 		}
 		return ResponseEntity.notFound().build();
 	}
 	
-	@DeleteMapping(value = "/usuario/{id}")
-	public ResponseEntity<?> remover(@PathVariable Long id){
-		
+	@DeleteMapping("{id}")
+	@Transactional
+	public ResponseEntity<?> remover(@PathVariable Long id) {	
 		try {
-			
-			Optional<Usuario> optional = usuarioRepository.findById(id);
-			if(optional.isPresent()) {
-				usuarioRepository.deleteById(id);
-				LOGGER.info("Usuario Deletado "+ id);
+			Boolean deleted = service.deleteById(id);
+			if (deleted) {
+				LOGGER.info("Usuário Removido " + id);
 				return ResponseEntity.ok().build();
 			}
+			LOGGER.info("Não foi possível remover o usuário");
 		} catch (Exception e) {
-			LOGGER.info("Erro na exclusao de usuario "+e);
+			LOGGER.info("Erro na remoção de usuário " + e);
 		}
-		
-
 		return ResponseEntity.notFound().build();
 	}
-	
 
+	@PutMapping("{id}")
 	@Transactional
-	@PutMapping( value = "/usuario/{id}")
-	public ResponseEntity<Usuario> atualizar(@PathVariable Long id){
-			
+	public ResponseEntity<Usuario> update (@PathVariable Long id, @RequestBody @Valid UsuarioForm form) {
 		try {
-			Optional<Usuario> optional = usuarioRepository.findById(id);
-			if(optional.isPresent()) {
-				Usuario usuario = new Usuario();
-				usuario.atualizar(id, usuarioRepository);
-				LOGGER.info("Usuario atualizado "+ id);
-				return ResponseEntity.ok(usuario);
+			Usuario usuario = service.findById(id);
+			if (usuario != null) {
+				usuario = service.atualizar(id, form);
+				if (usuario != null) {
+					LOGGER.info("Usuario atualizado "+ id);
+					return ResponseEntity.ok(usuario);
+				}
+				LOGGER.info("Usuário não encontrado");
+				return ResponseEntity.badRequest().build();
 			}
-			
-			
-			} catch (Exception e) {
-				LOGGER.info("Erro na atualizacao de usuario "+ e);
-			}
-		
-		
+		} catch (Exception e) {
+			LOGGER.info("Erro na atualizacao de usuario " + e);
+		}
 		return ResponseEntity.notFound().build();
 	}
 }
