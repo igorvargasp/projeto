@@ -8,14 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "pedido")
 @Data
-@Getter
-@Setter
+@NoArgsConstructor
 public class Pedido {
 
 	@Id
@@ -39,9 +37,5 @@ public class Pedido {
 		super();
 		this.id = id;
 		this.quantidade = quantidade;
-	}
-
-	public Pedido(){
-		
 	}
 }

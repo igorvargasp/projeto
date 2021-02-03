@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.ufsm.projeto</groupId>
-	<artifactId>api-usuario</artifactId>
+	<artifactId>compasso</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>compasso</name>
 	<description>Demo project for Spring Boot</description>

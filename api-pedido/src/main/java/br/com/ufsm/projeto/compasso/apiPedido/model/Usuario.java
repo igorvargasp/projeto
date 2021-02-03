@@ -1,12 +1,10 @@
 package br.com.ufsm.projeto.compasso.apiPedido.model;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Data
-@Getter
-@Setter
+@NoArgsConstructor
 public class Usuario {
 	
 	private long id;
@@ -20,8 +18,4 @@ public class Usuario {
 		this.id = id;
 		this.nome = nome;
 	}
-	public Usuario(){
-		
-	}
-	
 }

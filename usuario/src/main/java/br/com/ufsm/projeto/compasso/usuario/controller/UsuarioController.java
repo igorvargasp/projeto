@@ -24,6 +24,7 @@ import br.com.ufsm.projeto.compasso.usuario.model.Usuario;
 import br.com.ufsm.projeto.compasso.usuario.service.UsuarioService;
 
 @RestController
+@RequestMapping("/usuario")
 public class UsuarioController {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(UsuarioController.class);
@@ -31,7 +32,7 @@ public class UsuarioController {
 	private UsuarioService service;
 	
 	
-	@GetMapping("/usuario")
+	@GetMapping
 	public List<Usuario> listar (String nome) {
 		List<Usuario> usuarios = (nome != null && !nome.isEmpty()) ? 
 				service.findByName(nome) : service.findAll();
