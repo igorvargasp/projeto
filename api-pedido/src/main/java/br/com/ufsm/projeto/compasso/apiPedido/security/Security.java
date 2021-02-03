@@ -37,6 +37,7 @@ public class Security extends WebSecurityConfigurerAdapter {
 		List<Usuario> user = client.buscaUsuario();
 		for (Usuario usuario : user) {
 			auth.inMemoryAuthentication().withUser(usuario.getNome()).password("{noop}"+usuario.getSenha()).roles("USER");	
+				
 		}
 	}
 }
