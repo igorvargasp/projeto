@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.ufsm.projeto.compasso</groupId>
-	<artifactId>api-produto</artifactId>
+	<artifactId>api-pedido</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>api-produto</name>
 	<description>Demo project for Spring Boot</description>
@@ -81,7 +81,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+		<dependency>
+		    <groupId>org.flywaydb</groupId>
+		    <artifactId>flyway-core</artifactId>
+		    <version>7.5.0</version>
+		</dependency>
 		
 		<dependency>
     <groupId>io.springfox</groupId>
@@ -133,7 +137,3 @@
 		</plugins>
 	</build>
 	</project>
-	
-
-
-
