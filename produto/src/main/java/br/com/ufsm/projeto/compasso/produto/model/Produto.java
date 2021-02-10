@@ -25,14 +25,24 @@ public class Produto {
 	@Column(name = "preco")
 	private Double preco;
 	
+	@Column(name = "quantidade")
+	private Integer quantidade;
+	
 	@Column(name = "disponivel")
 	private Boolean disponivel;
 	
-	public Produto(String nome, Double preco, Boolean disponivel, Long id) {
+	public Produto(String nome, Double preco, Integer quantidade, Boolean disponivel) {
 		super();
 		this.nome = nome;
 		this.preco = preco;
+		this.quantidade = quantidade;
 		this.disponivel = disponivel;
-		this.id = id;
+	}
+	
+	public void removeQuantidade(int quantidade) throws Exception {
+		if (quantidade <= this.quantidade)
+			this.quantidade -= quantidade;
+		else
+			throw new Exception("Quantidade do produto é insuficiente");
 	}
 }

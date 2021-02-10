@@ -1,10 +1,13 @@
 package br.com.ufsm.projeto.compasso.apiPedido.model;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+
+import lombok.Setter;
 
 @Data
-@NoArgsConstructor
+@Getter
+@Setter
 public class Produto {
 	
 	private Long id;
@@ -22,4 +25,8 @@ public class Produto {
 		this.disponivel = disponivel;
 		this.id = id;
 	}
+	public Produto(){
+
+	}
+	
 }

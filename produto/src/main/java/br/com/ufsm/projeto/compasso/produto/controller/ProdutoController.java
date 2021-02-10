@@ -75,7 +75,7 @@ public class ProdutoController {
 	@Transactional
 	public ResponseEntity<Produto> cadastrarProduto(@Validated  @RequestBody ProdutoForm form) throws IOException{
 		try {
-			Produto produto = new Produto(form.getNome(), form.getPreco(), form.getDisponivel(), (long)0);
+			Produto produto = new Produto(form.getNome(), form.getPreco(), form.getQuantidade(), form.getDisponivel());
 			produto = service.save(produto);
 			LOGGER.info("Produto cadastrado " + produto.getId());
 			return ResponseEntity.ok(produto);

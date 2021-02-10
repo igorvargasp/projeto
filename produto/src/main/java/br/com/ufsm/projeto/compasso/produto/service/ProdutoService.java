@@ -72,7 +72,8 @@ public class ProdutoService {
 		Produto produto = findById(id);
 		produto.setNome(form.getNome());
 		produto.setPreco(form.getPreco());
-		produto.setDisponivel(form.getDisponivel());		
+		produto.setDisponivel(form.getDisponivel());
+		produto.setQuantidade(form.getQuantidade());
 		return produto;
 	}
 }
