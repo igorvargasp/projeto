@@ -1,16 +1,24 @@
+server:
+  port: 8082
+  connection:
+  - timeout: 4000
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: ${DB_PASSWORD}
     url: jdbc:mysql://localhost:${DB_PORT}/${DB_NAME}?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true
     username: ${DB_USER}
+  flyway:
+    clean-disabled: false
+    clean-on-validation-error: false
+    locations: classpath:db/migration
+    table: schema_history
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    generate-ddl: true
     hibernate:
       ddl-auto: update
-server:
-  port: 8081
-  connection:
-  - timeout: 4000
- 
+    properties:
+      hibernate:
+        default-schema: usuario
+    show-sql: true
+  thymeleaf:
+    cache: false

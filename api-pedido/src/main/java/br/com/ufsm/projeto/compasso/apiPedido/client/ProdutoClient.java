@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import br.com.ufsm.projeto.compasso.apiPedido.model.Produto;
 
 
-@FeignClient(name = "produto", url = "http://localhost:8082/produto")
+@FeignClient(name = "produto", url = "http://localhost:8081/produto")
 public interface ProdutoClient {
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Produto> buscaProduto();

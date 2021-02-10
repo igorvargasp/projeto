@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import br.com.ufsm.projeto.compasso.apiPedido.model.Usuario;
 
-@FeignClient(name = "usuario", url = "http://localhost:8080/usuario" )
+@FeignClient(name = "usuario", url = "http://localhost:8082/usuario" )
 public interface UsuarioClient {
 	
 	@RequestMapping(method = RequestMethod.GET, value ="", produces = "application/json;charset=UTF-8")

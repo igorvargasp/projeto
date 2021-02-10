@@ -1,3 +1,7 @@
+server:
+  port: 8080
+  connection:
+    - timeout: 4000
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -9,8 +13,9 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: update
-server:
-  port: 8081
-  connection:
-  - timeout: 4000
- 
+feign:
+  client:
+    config:
+      default: 
+        - connectTimeout: 160000000
+        - readTimeout: 16000000
