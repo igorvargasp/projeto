@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.ufsm.projeto</groupId>
-	<artifactId>api-usuario</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>compasso</name>
-	<description>Demo project for Spring Boot</description>
+	<artifactId>usuario</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>usuario</name>
+	<description>Projeto Spring Boot responsável por gerenciar e autenticar usuários.</description>
 
 	<properties>
 		<java.version>11</java.version>
@@ -121,7 +121,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	
-	
-
 </project>
