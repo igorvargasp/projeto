@@ -30,10 +30,6 @@ public class PedidoService {
 	private ProdutoClient clientProduto;
 
     public Pedido cadastraPedido(Long usuarioId, Long produtoId, Integer quantidade){       
-		new Thread(){
-			
-			@Override
-			public void run() {
 				
 				Integer qtd = quantidade;
 				try {
@@ -52,16 +48,20 @@ public class PedidoService {
 						List<Produto> produto = clientProduto.buscaProduto(); 
 						for (Produto p : produto) {
 							if(p.getId() == produtoId) {
-								pedido.setProduto(p.getNome());
-								pedido.setPreco(p.getPreco());
-								pedido.setIdProduto(p.getId());				
-								LOGGER.info("Adicionou o produto ao pedido " + p.getId());
+					
+								if(p.getDisponivel().equals(false)){
+									LOGGER.info("Produto indisponivel " + p.getId());
+									return null;
+								}else{
+									pedido.setQuantidade(qtd);
+									pedido.setProduto(p.getNome());
+									pedido.setPreco(p.getPreco());
+									pedido.setIdProduto(p.getId());				
+									LOGGER.info("Adicionou o produto ao pedido " + p.getId());
+									return pedidoRepository.save(pedido);
+								}
+														
 							}
-							pedido.setQuantidade(qtd);
-							if (pedido.getIdUsuario().equals(null) && pedido.getIdProduto().equals(null))
-								LOGGER.info("Usuario e pedido esta vazio");
-							else
-								return pedidoRepository.save(pedido);
 						}
 					} catch (Exception e) {
 						LOGGER.info("Erro ao fazer pedido " + e);
@@ -74,7 +74,7 @@ public class PedidoService {
 
 
 			}
-		}.start();
+		
 
        
 
