@@ -31,22 +31,6 @@ public class PedidoService {
 
     public Pedido cadastraPedido(Long usuarioId, Long produtoId, Integer quantidade){       
 				
-				
-			}
-		} catch (Exception e) {
-			LOGGER.info("Erro ao fazer pedido " + e);
-		}
-	} catch (Exception e) {
-		LOGGER.info("Pedido erro " + e);
-	}
-	LOGGER.info("Nada foi cadastrado");
-
-
-
-
-	return null;
-       
-
 			Integer qtd = quantidade;
 			try {
 				List<Usuario> usuario = clientUser.buscaUsuario();
