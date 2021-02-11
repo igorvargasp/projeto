@@ -3,6 +3,8 @@ package br.com.ufsm.projeto.compasso.produto.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -11,8 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mapping.PropertyReferenceException;
+import org.springframework.data.util.Streamable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -42,11 +46,13 @@ public class ProdutoController {
 	private ProdutoService service;
 	
 	@GetMapping("/pagina")
-	public ResponseEntity<Page<Produto>> listarPaginado (@RequestParam(required = false) String nome, Pageable paginacao) {
+	public ResponseEntity<Page<Produto>> listarDisponiveis (@RequestParam(required = false) String nome, Pageable paginacao) {
 		try {
-			Page<Produto> produtos = (nome != null && !nome.isEmpty()) ? 
-					service.findByName(nome, paginacao) : service.findAll(paginacao);
-			return ResponseEntity.ok(produtos);
+			List<Produto> produtos = (nome != null && !nome.isEmpty()) ? 
+					service.findByName(nome) : service.findAll();
+			produtos = produtos.stream().filter(p -> p.getDisponivel()).collect(Collectors.toList());
+			Page<Produto> disponiveis = new PageImpl<Produto>(produtos, paginacao, produtos.size());
+			return ResponseEntity.ok(disponiveis);
 		} catch (PropertyReferenceException e) {
 			LOGGER.info("Campo de ordenacao indevido " + e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
