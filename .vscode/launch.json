@@ -1,0 +1,34 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Usuario<usuario>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "br.com.ufsm.projeto.compasso.usuario.Usuario",
+            "projectName": "usuario",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ApiProduto<produto>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "br.com.ufsm.projeto.compasso.produto.ApiProduto",
+            "projectName": "produto",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ApiPedido<pedido>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "br.com.ufsm.projeto.compasso.apiPedido.ApiPedido",
+            "projectName": "pedido",
+            "args": ""
+        }
+    ]
+}
