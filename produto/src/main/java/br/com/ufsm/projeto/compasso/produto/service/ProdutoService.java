@@ -1,8 +1,5 @@
 package br.com.ufsm.projeto.compasso.produto.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.ufsm.projeto.compasso.produto.controller.form.ProdutoForm;
@@ -23,10 +20,6 @@ public class ProdutoService {
 	public ProdutoService(ProdutoRepository prodRepository) { 
 		this.prodRepository = prodRepository;
 	}
-
-	public Page<Produto> findAll(Pageable paginacao) {
-		return prodRepository.findAll(paginacao);
-	}
 	
 	public List<Produto> findAll() {
 		return prodRepository.findAll();
@@ -34,11 +27,6 @@ public class ProdutoService {
 	
 	public List<Produto> findByName(String nome) {
 		return prodRepository.findByNome(nome);
-	}
-	
-	public Page<Produto> findByName(String nome, Pageable paginacao) {
-		List<Produto> produto = prodRepository.findByNome(nome);
-        return new PageImpl<Produto>(produto, paginacao, produto.size());
 	}
 	
 	public Produto findById(Long id) {
