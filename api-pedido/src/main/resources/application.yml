@@ -12,6 +12,7 @@ spring:
     hibernate:
       ddl-auto: update
   flyway:
+<<<<<<< HEAD
       clean-disabled: false
       clean-on-validation-error: false
       locations: classpath:db/migration
@@ -20,3 +21,12 @@ spring:
     basic:
     enabled: false
     
+=======
+    clean-disabled: false
+    clean-on-validation-error: false
+    locations: classpath:db/migration
+    table: schema_history
+  security:
+    basic:
+    enabled: false
+>>>>>>> 2f3621b653a835f64414c71fcb7ead0436cf5e50
