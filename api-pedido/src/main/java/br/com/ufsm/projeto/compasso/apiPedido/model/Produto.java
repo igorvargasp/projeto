@@ -9,15 +9,15 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Produto {
-	
+
 	private Long id;
-	
+
 	private String nome;
-	
+
 	private Double preco;
-	
+
 	private Boolean disponivel;
-	
+
 	public Produto(String nome, Double preco, Boolean disponivel, Long id) {
 		super();
 		this.nome = nome;
@@ -25,8 +25,9 @@ public class Produto {
 		this.disponivel = disponivel;
 		this.id = id;
 	}
-	public Produto(){
+
+	public Produto() {
 
 	}
-	
+
 }

@@ -12,23 +12,23 @@ import br.com.ufsm.projeto.compasso.usuario.repository.UsuarioRepository;
 import java.util.List;
 import java.util.Optional;
 
-@Service 
+@Service
 public class UsuarioService {
 	private final Logger LOGGER = LoggerFactory.getLogger(UsuarioService.class);
 	private UsuarioRepository usuarioRepository;
 
-	public UsuarioService(UsuarioRepository usuarioRepository) { 
+	public UsuarioService(UsuarioRepository usuarioRepository) {
 		this.usuarioRepository = usuarioRepository;
 	}
 
 	public List<Usuario> findAll() {
 		return usuarioRepository.findAll();
 	}
-	
+
 	public List<Usuario> findByName(String nome) {
 		return usuarioRepository.findByNome(nome);
 	}
-	
+
 	public Usuario findById(Long id) {
 		Optional<Usuario> usuario = usuarioRepository.findById(id);
 		if (usuario.isPresent()) {
@@ -39,7 +39,7 @@ public class UsuarioService {
 		return null;
 	}
 
-	public Boolean deleteById (Long id) {
+	public Boolean deleteById(Long id) {
 		Usuario usuario = findById(id);
 		if (usuario != null) {
 			usuarioRepository.deleteById(id);
@@ -49,14 +49,14 @@ public class UsuarioService {
 	}
 
 	public Usuario save(Usuario usuario) {
-		if (usuario == null) { 
+		if (usuario == null) {
 			LOGGER.error("Usuario é NULL!!!");
 			return null;
 		}
 		return usuarioRepository.save(usuario);
 	}
-	
-	public Usuario atualizar (Long id, UsuarioForm form) {
+
+	public Usuario atualizar(Long id, UsuarioForm form) {
 		Usuario usuario = findById(id);
 		usuario.setNome(form.getNome());
 		usuario.setSenha(form.getSenha());

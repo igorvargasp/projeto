@@ -20,20 +20,21 @@ public class Pedido {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;	
+	private Long id;
 	private Integer quantidade;
-	
+
 	@Column(name = "idUsuario")
 	private Long idUsuario;
-	@Column(name = "usuario")	
+	@Column(name = "usuario")
 	private String usuario;
-	
 	@Column(name = "idProduto")
 	private Long idProduto;
 	@Column(name = "produto")
 	private String produto;
 	@Column(name = "preco")
 	private Double preco;
+	@Column(name = "finalizado")
+	private boolean finalizado;
 
 	public Pedido(Long id, Integer quantidade) {
 		super();
@@ -41,7 +42,7 @@ public class Pedido {
 		this.quantidade = quantidade;
 	}
 
-	public Pedido(){
-		
+	public Pedido() {
+
 	}
 }

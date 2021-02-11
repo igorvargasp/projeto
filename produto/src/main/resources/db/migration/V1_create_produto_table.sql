@@ -1,4 +1,4 @@
-CREATE TABLE  produto (
+CREATE TABLE IF NOT EXISTS produto (
     id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nome varchar(25) NOT NULL,
     preco decimal NOT NULL,

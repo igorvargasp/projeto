@@ -1,6 +1,5 @@
 package br.com.ufsm.projeto.compasso.usuario.controller;
 
-
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -24,22 +23,21 @@ import br.com.ufsm.projeto.compasso.usuario.model.Usuario;
 import br.com.ufsm.projeto.compasso.usuario.service.UsuarioService;
 
 @RestController
+@RequestMapping("/usuario")
 public class UsuarioController {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(UsuarioController.class);
 	@Autowired
 	private UsuarioService service;
-	
-	
-	@GetMapping("/usuario")
-	public List<Usuario> listar (String nome) {
-		List<Usuario> usuarios = (nome != null && !nome.isEmpty()) ? 
-				service.findByName(nome) : service.findAll();
+
+	@GetMapping
+	public List<Usuario> listar(String nome) {
+		List<Usuario> usuarios = (nome != null && !nome.isEmpty()) ? service.findByName(nome) : service.findAll();
 		return usuarios;
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<Usuario> detalhe (@PathVariable Long id) {
+	public ResponseEntity<Usuario> detalhe(@PathVariable Long id) {
 		try {
 			return ResponseEntity.ok(service.findById(id));
 		} catch (Exception e) {
@@ -48,24 +46,24 @@ public class UsuarioController {
 		LOGGER.info("Usuário não encontrado");
 		return ResponseEntity.notFound().build();
 	}
-	
+
 	@PostMapping
 	@Transactional
-	public ResponseEntity<Usuario> cadastrar(@RequestBody @Valid UsuarioForm form){
+	public ResponseEntity<Usuario> cadastrar(@RequestBody @Valid UsuarioForm form) {
 		try {
-			Usuario usuario = new Usuario((long)0, form.getNome(), form.getSenha());
+			Usuario usuario = new Usuario((long) 0, form.getNome(), form.getSenha());
 			usuario = service.save(usuario);
 			LOGGER.info("Usuario cadastro " + usuario.getId());
-			return ResponseEntity.ok(usuario);			
+			return ResponseEntity.ok(usuario);
 		} catch (Exception e) {
 			LOGGER.info("Erro no cadastro " + e);
 		}
 		return ResponseEntity.notFound().build();
 	}
-	
-	@DeleteMapping("{id}")
+
+	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity<?> remover(@PathVariable Long id) {	
+	public ResponseEntity<?> remover(@PathVariable Long id) {
 		try {
 			Boolean deleted = service.deleteById(id);
 			if (deleted) {
@@ -79,15 +77,15 @@ public class UsuarioController {
 		return ResponseEntity.notFound().build();
 	}
 
-	@PutMapping("{id}")
+	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<Usuario> update (@PathVariable Long id, @RequestBody @Valid UsuarioForm form) {
+	public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody @Valid UsuarioForm form) {
 		try {
 			Usuario usuario = service.findById(id);
 			if (usuario != null) {
 				usuario = service.atualizar(id, form);
 				if (usuario != null) {
-					LOGGER.info("Usuario atualizado "+ id);
+					LOGGER.info("Usuario atualizado " + id);
 					return ResponseEntity.ok(usuario);
 				}
 				LOGGER.info("Usuário não encontrado");

@@ -49,3 +49,6 @@ services:
     depends_on:
       database:
         condition: service_healthy
+    links: 
+      - "usuario-api:usuario"
+      - "produto-api:produto"
