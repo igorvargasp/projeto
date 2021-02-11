@@ -30,52 +30,54 @@ public class PedidoService {
 	private ProdutoClient clientProduto;
 
     public Pedido cadastraPedido(Long usuarioId, Long produtoId, Integer quantidade){       
-		new Thread(){
+		
+	
+	Integer qtd = quantidade;
+	try {
+		List<Usuario> usuario = clientUser.buscaUsuario();
+		try {
+			LOGGER.info("Entrou no pedido");
+			Pedido pedido = new Pedido();
 			
-			@Override
-			public void run() {
-				
-				Integer qtd = quantidade;
-				try {
-					List<Usuario> usuario = clientUser.buscaUsuario();
-					try {
-						LOGGER.info("Entrou no pedido");
-						Pedido pedido = new Pedido();
-						
-						for (Usuario u : usuario) {
-							if(u.getId() == usuarioId) {			
-								pedido.setUsuario(u.getNome());
-								pedido.setIdUsuario(u.getId());
-								LOGGER.info("Adicionou o usuario ao pedido " + u.getId());
-							}
-						}
-						List<Produto> produto = clientProduto.buscaProduto(); 
-						for (Produto p : produto) {
-							if(p.getId() == produtoId) {
-								pedido.setProduto(p.getNome());
-								pedido.setPreco(p.getPreco());
-								pedido.setIdProduto(p.getId());				
-								LOGGER.info("Adicionou o produto ao pedido " + p.getId());
-							}
-							pedido.setQuantidade(qtd);
-							if (pedido.getIdUsuario().equals(null) && pedido.getIdProduto().equals(null))
-								LOGGER.info("Usuario e pedido esta vazio");
-							else
-								return pedidoRepository.save(pedido);
-						}
-					} catch (Exception e) {
-						LOGGER.info("Erro ao fazer pedido " + e);
-					}
-				} catch (Exception e) {
-					LOGGER.info("Pedido erro " + e);
+			for (Usuario u : usuario) {
+				if(u.getId() == usuarioId) {			
+					pedido.setUsuario(u.getNome());
+					pedido.setIdUsuario(u.getId());
+					LOGGER.info("Adicionou o usuario ao pedido " + u.getId());
 				}
-				LOGGER.info("Nada foi cadastrado");
-			
-
-
 			}
-		}.start();
+			List<Produto> produto = clientProduto.buscaProduto(); 
+			for (Produto p : produto) {
+				if(p.getId() == produtoId) {
+					
+					if(p.getDisponivel().equals(false)){
+						LOGGER.info("Produto indisponivel " + p.getId());
+						return null;
+					}else{
+						pedido.setQuantidade(qtd);
+						pedido.setProduto(p.getNome());
+						pedido.setPreco(p.getPreco());
+						pedido.setIdProduto(p.getId());				
+						LOGGER.info("Adicionou o produto ao pedido " + p.getId());
+						return pedidoRepository.save(pedido);
+					}
+											
+				}
+				
+				
+			}
+		} catch (Exception e) {
+			LOGGER.info("Erro ao fazer pedido " + e);
+		}
+	} catch (Exception e) {
+		LOGGER.info("Pedido erro " + e);
+	}
+	LOGGER.info("Nada foi cadastrado");
 
+
+
+
+	return null;
        
 
     }
