@@ -29,7 +29,7 @@ public class PedidoController {
 	
 	@PostMapping(value ="/pedidos/usuario/{usuarioId}/produto/{produtoId}/quantidade/{quantidade}", produces = "application/json;charset=UTF-8")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<Pedido> create(@PathVariable Long usuarioId, @PathVariable Long produtoId,  @PathVariable Integer quantidade) {
+	public ResponseEntity<Pedido> create(@PathVariable("usuarioId") Long usuarioId, @PathVariable("produtoId") Long produtoId,  @PathVariable("quantidade") Integer quantidade) {
 		try {
 			return ResponseEntity.ok(service.cadastraPedido(usuarioId, produtoId, quantidade));
 		} catch (Exception e) {
