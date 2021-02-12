@@ -6,11 +6,14 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
+import br.com.ufsm.projeto.compasso.produto.config.validation.*;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@QuantidadeDisponibilidade
 public class ProdutoForm {
 
 	@NotNull
