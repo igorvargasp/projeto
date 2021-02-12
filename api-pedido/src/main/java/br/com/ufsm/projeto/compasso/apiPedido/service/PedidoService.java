@@ -30,13 +30,13 @@ public class PedidoService {
 	private ProdutoClient clientProduto;
 
 	public Pedido cadastraPedido(Long usuarioId, Long produtoId, Integer quantidade){       
-				
+		Pedido pedido = new Pedido();
 			Integer qtd = quantidade;
 			try {
 				List<Usuario> usuario = clientUser.buscaUsuario();
-				try {
+				
 					LOGGER.info("Entrou no pedido");
-					Pedido pedido = new Pedido();
+					
 					
 					for (Usuario u : usuario) {
 						if(u.getId() == usuarioId) {			
@@ -68,18 +68,19 @@ public class PedidoService {
 						else
 							return pedidoRepository.save(pedido);
 					}
-				}
+				
 				pedido.setQuantidade(qtd);
 				if (pedido.getIdUsuario().equals(null) && pedido.getIdProduto().equals(null))
 					LOGGER.info("Usuario e pedido esta vazio");
 				else
 					return pedidoRepository.save(pedido);
-			} catch (Exception e) {
+			}catch(Exception e) {
 				LOGGER.info("Erro ao fazer pedido " + e);
 			}
-		
-
-       return null;
+			return null;
+							
+				
+			
 
     }
 }
